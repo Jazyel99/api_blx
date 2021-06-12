@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
-from .. import models, schemas
-
-from ..hashing import Hash
+from ..models import models
+from ....schemas import user_schema
+from ....auth.hashing import Hash
 from fastapi import status, HTTPException
 from uuid import uuid4
 
 generate_uuid4 = str(uuid4())
 
-def create(request: schemas.UserBase, db: Session):
+def create(request: user_schema.UserBase, db: Session):
     new_user = models.User( user_id = generate_uuid4,
                             user_name = request.user_name,
                             user_phone = request.user_phone,

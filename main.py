@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from blx import models
-from blx.database import Base, engine
-from blx.routes import user, product, authentication
+from src.infra.sqlalchemy.models import models
+from src.infra.sqlalchemy.config.database import Base, engine
+from src.routes import user, product, authentication, product_order, products_for_sale
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -20,4 +20,5 @@ models.Base.metadata.create_all(engine)
 app.include_router(authentication.router)
 app.include_router(user.router)
 app.include_router(product.router)
-
+app.include_router(products_for_sale.router)
+app.include_router(product_order.router)

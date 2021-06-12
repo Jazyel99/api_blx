@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, Float, String, Boolean, ForeignKey, Table
+from sqlalchemy import Column, Integer, Float, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship, backref
-
-from .database import Base
+#from .database import Base
+from ..config.database import Base
 
 
 class User(Base):
@@ -15,7 +15,6 @@ class User(Base):
     
     products = relationship("Product", back_populates="user_id_seller")
  
-
 class Product(Base):
     __tablename__ = "products"
     
@@ -30,13 +29,14 @@ class Product(Base):
 
     user_id_seller = relationship("User", back_populates="products")
 
-
-class ProductsSold(Base):
-    __tablename__ = "products_sold"
+#tabela de pedidos
+class ProductOrder(Base):
+    __tablename__ = "product_order"
     
-    products_sold_id = Column(String, primary_key=True, index=True)
+    product_order_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     product_id = Column(String, ForeignKey('products.product_id'))
     user_buyer_id = Column(String, ForeignKey('users.user_id'))
-
+    amount_product = Column(Integer)
+    
     buyer_user = relationship('User')
     purchased_product = relationship('Product')

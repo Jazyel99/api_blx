@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Optional
-from . import schemas
+from ..schemas import auth_schema
 from jose import JWTError, jwt
 
 
@@ -22,7 +21,7 @@ def verify_token(token: str, credentials_exception):
         user_id: str = payload.get("user_id")
         if username is None:
             raise credentials_exception
-        token_data = schemas.TokenData(username=username, user_id=user_id)
+        token_data = auth_schema.TokenData(username=username, user_id=user_id)
     except JWTError:
         raise credentials_exception
     
